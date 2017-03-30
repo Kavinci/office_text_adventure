@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/office_text_adventure.unity
+  isLoaded: 1
+  isActive: 1
