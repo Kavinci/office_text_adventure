@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "office_text_adventure", "office_text_adventure.csproj", "{B92199DB-99E3-16CE-8B50-DDE1C7D50A72}"
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "office_text_adventure", "office_text_adventure.csproj", "{8A71A9F5-9D59-CB57-D5D6-7160DE9F56FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B92199DB-99E3-16CE-8B50-DDE1C7D50A72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B92199DB-99E3-16CE-8B50-DDE1C7D50A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B92199DB-99E3-16CE-8B50-DDE1C7D50A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B92199DB-99E3-16CE-8B50-DDE1C7D50A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A71A9F5-9D59-CB57-D5D6-7160DE9F56FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A71A9F5-9D59-CB57-D5D6-7160DE9F56FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A71A9F5-9D59-CB57-D5D6-7160DE9F56FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A71A9F5-9D59-CB57-D5D6-7160DE9F56FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
