@@ -246,6 +246,7 @@ public class TextController : MonoBehaviour {
     enum people {lexie, ed, boss};
     enum stuff {computer, cup, cabinet, coffeePot, fridge, vending, whiteboard, toilet, sink };
     enum bossPath { h3, h2, h1, cubeFarm, landing, h4};
+    enum actions { look, take, put, talk, interact};
     int compCount;
     int fileCount;
     int edCount;
@@ -269,6 +270,12 @@ public class TextController : MonoBehaviour {
                 "TO THE EAST THERE IS A FILING CABINET. " +
                 "TO THE SOUTH IS THE ONLY OPENING AND JUST A WALL TO THE NORTH.\n" + currentTime + "\n\n" + textInput;
 
+            consoleBox.text = textConsole;
+        }
+        else if (action == "" && target == "")
+        {
+            setTime(10);
+            textConsole = "\n" + currentTime + "\n\n"+textInput;
             consoleBox.text = textConsole;
         }
         else
