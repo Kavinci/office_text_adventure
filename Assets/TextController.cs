@@ -11,9 +11,11 @@ public class TextController : MonoBehaviour {
 
     string textConsole;
     string textInput;
-    string currentTime;
-    int currentMin;
-    int currentHour;
+
+    GameTime time = new GameTime();
+    Player player = new Player();
+    Boss boss = new Boss();
+    Room room = new Room();
 
     // Use this for initialization
     void Start () {
@@ -21,14 +23,11 @@ public class TextController : MonoBehaviour {
             "TRY TO WASTE TIME UNTIL THE END OF THE DAY. DON'T GET CAUGHT SLACKING OFF BY YOUR BOSS!\n\n" 
             + "TYPE START TO BEGIN.";
         inputBox.text = ">";
-
-        
-
         textConsole = "";
         textInput = ">";
 
-        currentMin = 0;
-        currentHour = 1;
+        player.currentLocation = "cubical";
+        time.setTime(60);
 	}
 	
 	// Update is called once per frame
@@ -194,7 +193,7 @@ public class TextController : MonoBehaviour {
         string[] filter = inputLo.Split('>',' ');
         string action = filter[1];
         string target;
-        string currentLoc = "cubical";
+        string currentLoc = player.currentLocation;
         int j = 0;
 
         foreach(string s in filter)
@@ -214,24 +213,172 @@ public class TextController : MonoBehaviour {
             target = "";
         }
         
-        if (currentLoc == "cubical")
+        switch(currentLoc)
         {
-            cubical(action, target, input);
+            case "cubical":
+                consoleBox.text = room.cubical(action, target, input);
+                break;
+            case "cubeFarm":
+                consoleBox.text = room.cubeFarm(action, target, input);
+                break;
+            case "h1":
+                consoleBox.text = room.h1(action, target, input);
+                break;
+            case "h2":
+                consoleBox.text = room.h2(action, target, input);
+                break;
+            case "h3":
+                consoleBox.text = room.h3(action, target, input);
+                break;
+            case "h4":
+                consoleBox.text = room.h4(action, target, input);
+                break;
+            case "bathroom":
+                consoleBox.text = room.bathroom(action, target, input);
+                break;
+            case "landing":
+                consoleBox.text = room.landing(action, target, input);
+                break;
+            case "kitchen":
+                consoleBox.text = room.kitchen(action, target, input);
+                break;
+            case "serverRoom":
+                consoleBox.text = room.serverRoom(action, target, input);
+                break;
+            case "confRoom":
+                consoleBox.text = room.confRoom(action, target, input);
+                break;
+            case "bossOffice":
+                consoleBox.text = room.bossOffice(action, target, input);
+                break;
+            case "elevator":
+                consoleBox.text = room.elevator(action, target, input);
+                break;
         }       
     }
+   
+}
+public class Room
+{
+    GameTime time = new GameTime();
+    Err error = new Err();
+    enum rooms { cubical, cubeFarm, h1, h2, h3, h4, bathroom, landing, kitchen, serverRoom, confRoom, bossOffice, elevator };
+    enum people { lexie, ed, boss };
+    enum stuff { computer, cup, cabinet, coffeePot, fridge, vending, whiteboard, toilet, sink };
+    enum bossPath { h3, h2, h1, cubeFarm, landing, h4 };
+    enum actions { look, take, put, talk, interact };
 
-    // Sets the clock for the game by adding minutes
-    internal void setTime(int minute)
+
+   public string cubical(string action, string target, string input)
+    {
+
+        if (action == "help" && target == "")
+        {
+            return "HELP STATEMENT GOES HERE\n" + time.getTime() + "\n";
+        }
+        else if (action == "start" && target == "")
+        {
+            time.setTime(0);
+            return "YOU FIND YOURSELF IN YOUR CUBICAL AFTER LUNCH WITH NOTHING TO DO AND MR. BOSS WON'T LET YOU LEAVE EARLY. " +
+                "IN YOUR CUBE THERE IS A DESK IN FRONT OF YOU TO THE WEST. " +
+                "TO THE EAST THERE IS A FILING CABINET. " +
+                "TO THE SOUTH IS THE ONLY OPENING AND JUST A WALL TO THE NORTH.\n" + time.getTime() + "\n\n" + input;
+
+        }
+        else if (action == "" && target == "")
+        {
+            return "\n" + time.getTime() + "\n\n" + input;
+            
+        }
+        else
+        {
+            return error.error(101, input);
+        }
+    }
+
+    public string cubeFarm(string action, string target, string input)
+    {
+        return "THIS IS THE CUBE FARM";
+    }
+
+    public string h1(string action, string target, string input)
+    {
+        return "THIS IS THE HALLWAY";
+    }
+
+    public string h2(string action, string target, string input)
+    {
+        return "THIS IS THE HALLWAY";
+    }
+
+    public string h3(string action, string target, string input)
+    {
+        return "THIS IS THE HALLWAY";
+    }
+
+    public string h4(string action, string target, string input)
+    {
+        return "THIS IS THE HALLWAY";
+    }
+
+    public string bathroom(string action, string target, string input)
+    {
+        return "THIS IS THE BATHROOM";
+    }
+
+    public string landing(string action, string target, string input)
+    {
+        return "THIS IS THE ELEVATOR LANDING";
+    }
+
+    public string kitchen(string action, string target, string input)
+    {
+        return "THIS IS THE KITCHEN";
+    }
+
+    public string serverRoom(string action, string target, string input)
+    {
+        return "THIS IS THE SERVER ROOM";
+    }
+
+    public string confRoom(string action, string target, string input)
+    {
+        return "THIS IS THE CONFERENCE ROOM";
+    }
+
+    public string bossOffice(string action, string target, string input)
+    {
+        return "THIS IS YOUR BOSS'S OFFICE";
+    }
+
+    public string elevator(string action, string target, string input)
+    {
+        if (time.getGameOver() == false)
+        {
+            return "GAME OVER, WOULD YOU LIKE TO PLAY AGAIN?";
+        }
+        else
+        {
+            return "IT IS NOT 5PM YET. IT IS NOT TIME TO LEAVE.";
+        }
+    }
+}
+public class GameTime
+{
+    public string currentTime;
+    public bool gameOver;
+    int currentMin;
+    int currentHour;
+    public void setTime(int minute)
     {
         currentMin = currentMin + minute;
 
-        if(currentMin >= 60)
+        if (currentMin >= 60)
         {
-            currentMin = currentMin - 60;
             currentHour = currentHour + 1;
-        };
-        
-        if(currentMin < 10)
+            currentMin = currentMin - 60;
+        }
+        if (currentMin < 10)
         {
             currentTime = currentHour.ToString() + ":" + "0" + currentMin.ToString() + " PM";
         }
@@ -239,123 +386,86 @@ public class TextController : MonoBehaviour {
         {
             currentTime = currentHour.ToString() + ":" + currentMin.ToString() + " PM";
         };
-        
+
+        finished();
     }
-    #region room functions
-    enum rooms {cubical, cubeFarm, h1, h2, h3, h4, bathroom, landing, kitchen, serverRoom, confRoom, bossOffice, elevator};
-    enum people {lexie, ed, boss};
-    enum stuff {computer, cup, cabinet, coffeePot, fridge, vending, whiteboard, toilet, sink };
-    enum bossPath { h3, h2, h1, cubeFarm, landing, h4};
-    enum actions { look, take, put, talk, interact};
-    int compCount;
-    int fileCount;
-    int edCount;
-    int lexCount;
-    int coffeeCount;
-    int printCount;
-    int pooCount;
-
-    void cubical(string action, string target, string input)
+    public string getTime()
     {
-        
-        if(action == "help" && target == "")
+        return currentTime;
+    }
+    void finished()
+    {
+        if (currentHour >= 5)
         {
-            consoleBox.text = "HELP STATEMENT GOES HERE\n" + currentTime + "\n";
-        }
-        else if (action == "start" && target == "")
-        {
-            setTime(0);
-            textConsole = "YOU FIND YOURSELF IN YOUR CUBICAL AFTER LUNCH WITH NOTHING TO DO AND MR. BOSS WON'T LET YOU LEAVE EARLY. " +
-                "IN YOUR CUBE THERE IS A DESK IN FRONT OF YOU TO THE WEST. " +
-                "TO THE EAST THERE IS A FILING CABINET. " +
-                "TO THE SOUTH IS THE ONLY OPENING AND JUST A WALL TO THE NORTH.\n" + currentTime + "\n\n" + textInput;
-
-            consoleBox.text = textConsole;
-        }
-        else if (action == "" && target == "")
-        {
-            setTime(10);
-            textConsole = "\n" + currentTime + "\n\n"+textInput;
-            consoleBox.text = textConsole;
+            gameOver = true;
         }
         else
         {
-            error(101, input);
+            gameOver = false;
         }
     }
-
-    void cubeFarm(string action, string target, string input)
+    public bool getGameOver()
     {
-
+        return gameOver;
     }
 
-    void h1(string action, string target, string input)
+}
+public class Player
+{
+    public string currentLocation { get; set; }
+    public int compCount { get; set; }
+    public int fileCount { get; set; }
+    public int edCount { get; set; }
+    public int lexCount { get; set; }
+    public int coffeeCount { get; set; }
+    public int printCount { get; set; }
+    public int pooCount { get; set; }
+    public Array invetory;
+
+    public void addInventory(string item)
     {
-
-    }
-
-    void h2(string action, string target, string input)
-    {
-
-    }
-
-    void h3(string action, string target, string input)
-    {
-
-    }
-
-    void h4(string action, string target, string input)
-    {
-
-    }
-
-    void bathroom(string action, string target, string input)
-    {
-
-    }
-
-    void landing(string action, string target, string input)
-    {
-
-    }
-
-    void kitchen(string action, string target, string input)
-    {
-
-    }
-
-    void serverRoom(string action, string target, string input)
-    {
-
-    }
-
-    void confRoom(string action, string target, string input)
-    {
-
-    }
-
-    void bossOffice(string action, string target, string input)
-    {
-
-    }
-
-    void elevator(string action, string target, string input)
-    {
-        if(currentHour >= 5)
+        if(invetory.Length <= 3)
+        {
+            push(item);
+        }
+        else
         {
 
         }
     }
+    void push(string item)
+    {
 
-    #endregion
+    }
+    void pop()
+    {
+
+    }
+}
+
+public class Boss
+{
+    public string currentLocation { get; set; }
+    void move()
+    {
+
+    }
+}
+
+public class Err
+{
     // Error codes to send out to the UI console
-    void error(int code, string input)
+    public string error(int code, string input)
     {
-        if(code == 101)
+        if (code == 101)
         {
-            consoleBox.text = input + "?\n" + "I don't know how to do that. Press enter and try again.";
+           return input + "?\n" + "I DON'T KNOW HOW TO DO THAT. TYPE START AND TRY AGAIN.";
         }
-        
+        else
+        {
+            return "NO ERROR CODE GIVEN";
+        }
+
     }
 }
 
