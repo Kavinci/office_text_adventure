@@ -420,26 +420,53 @@ public class Player
     public int coffeeCount { get; set; }
     public int printCount { get; set; }
     public int pooCount { get; set; }
-    public Array invetory;
+    public string[] inventory;
+    public int invCount;
+    public string invMax;
 
     public void addInventory(string item)
     {
-        if(invetory.Length <= 3)
+        if(invCount <= 3)
         {
             push(item);
         }
         else
         {
-
+            invMax = "YOU ARE CARRYING TOO MANY ITEMS";
         }
+    }
+
+    public int dropInventory(string item)
+    {
+        return pop(item);
     }
     void push(string item)
     {
-
+        int i = 0;
+        while(i < 4)
+        {
+            if(inventory[i] == null)
+            {
+                inventory[i] = item;
+                break;
+            }
+            i++;
+        }
     }
-    void pop()
+    int pop(string item)
     {
-
+        int x = 0;
+        int i = 0;
+        while (i < 4)
+        {
+            if (inventory[i] == item)
+            {
+                inventory[i] = null;
+                x = 1;  
+            }
+            i++;
+        }
+        return x;
     }
 }
 
