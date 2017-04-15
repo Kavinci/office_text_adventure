@@ -367,10 +367,12 @@ public class GameTime
 {
     public string currentTime;
     public bool gameOver;
-    int currentMin;
-    int currentHour;
+    int currentMin = 0;
+    int currentHour = 1;
     public void setTime(int minute)
     {
+        MonoBehaviour.print("Current Time: " + currentTime);
+        MonoBehaviour.print("Added Minutes: " + minute.ToString());
         currentMin = currentMin + minute;
 
         if (currentMin >= 60)
